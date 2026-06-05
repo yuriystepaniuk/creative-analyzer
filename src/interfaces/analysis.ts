@@ -13,6 +13,12 @@ export interface AnalysisResult {
   transcript: string | null;
 }
 
+export interface DriveFile {
+  buffer: ArrayBuffer;
+  mimeType: string;
+  fileName: string;
+}
+
 export interface AnalyzeRequest {
   url: string;
 }
