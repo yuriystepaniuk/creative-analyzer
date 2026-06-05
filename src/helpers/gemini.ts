@@ -1,3 +1,5 @@
+import { toBase64 } from "./base64";
+
 export interface PersonParams {
   gender: string | null;
   age_range: string | null;
@@ -66,15 +68,6 @@ const RESPONSE_SCHEMA = {
   },
   required: ["person", "transcript"],
 };
-
-function toBase64(buffer: ArrayBuffer): string {
-  const bytes = new Uint8Array(buffer);
-  let binary = "";
-  for (let i = 0; i < bytes.byteLength; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
 
 export async function analyzeWithGemini(
   apiKey: string,
