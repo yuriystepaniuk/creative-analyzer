@@ -1,20 +1,12 @@
-import { downloadFromDrive } from "../helpers/gdrive";
-import { analyzeWithGemini, type AnalysisResult } from "../helpers/gemini";
+import { downloadFromDrive } from "../helpers/gdrive.helper";
+import { analyzeWithGemini } from "../helpers/gemini.helper";
 import { DownloadError, GeminiError, ConfigError } from "../errors";
-
-export interface AnalyzeServiceResult {
-  data: AnalysisResult;
-  meta: {
-    fileName: string;
-    mimeType: string;
-    sizeKb: number;
-  };
-}
+import type { AnalyzeResponse } from "../interfaces/analysis";
 
 export async function analyzeCreative(
   url: string,
   apiKey: string
-): Promise<AnalyzeServiceResult> {
+): Promise<AnalyzeResponse> {
   if (!apiKey) {
     throw new ConfigError("GEMINI_API_KEY is not configured");
   }

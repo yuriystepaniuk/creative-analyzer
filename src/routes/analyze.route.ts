@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import { validateAnalyzeBody } from "../validation/analyze";
-import { analyzeCreative } from "../services/analyze";
+import { validateAnalyzeBody } from "../validation/analyze.validation";
+import { analyzeCreative } from "../services/analyze.service";
 import type { Env } from "../index";
 
 const analyze = new Hono<{ Bindings: Env }>();

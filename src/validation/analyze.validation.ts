@@ -1,8 +1,5 @@
 import { ValidationError } from "../errors";
-
-export interface AnalyzeRequest {
-  url: string;
-}
+import type { AnalyzeRequest } from "../interfaces/analysis";
 
 export function validateAnalyzeBody(body: unknown): AnalyzeRequest {
   if (!body || typeof body !== "object") {
