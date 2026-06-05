@@ -1,8 +1,6 @@
-import { toBase64 } from "./base64.helper";
+import { toBase64 } from "../helpers/base64.helper";
 import type { AnalysisResult } from "../interfaces/analysis";
-
-const GEMINI_API_URL =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+import { GEMINI_API_URL, GEMINI_TEMPERATURE } from "../constants/gemini.constants";
 
 const ANALYSIS_PROMPT = `You are analyzing an advertising creative (image or video) for a performance marketing team in the dating vertical.
 
@@ -74,7 +72,7 @@ export async function analyzeWithGemini(
     generationConfig: {
       responseMimeType: "application/json",
       responseSchema: RESPONSE_SCHEMA,
-      temperature: 0.1,
+      temperature: GEMINI_TEMPERATURE,
     },
   };
 
