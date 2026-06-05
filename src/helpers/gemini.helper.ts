@@ -1,19 +1,5 @@
-import { toBase64 } from "./base64";
-
-export interface PersonParams {
-  gender: string | null;
-  age_range: string | null;
-  ethnicity: string | null;
-  hair_color: string | null;
-  body_type: string | null;
-  clothing_style: string | null;
-  mood: string | null;
-}
-
-export interface AnalysisResult {
-  person: PersonParams | null;
-  transcript: string | null;
-}
+import { toBase64 } from "./base64.helper";
+import type { AnalysisResult } from "../interfaces/analysis";
 
 const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
@@ -81,12 +67,7 @@ export async function analyzeWithGemini(
       {
         parts: [
           { text: ANALYSIS_PROMPT },
-          {
-            inline_data: {
-              mime_type: mimeType,
-              data: base64Data,
-            },
-          },
+          { inline_data: { mime_type: mimeType, data: base64Data } },
         ],
       },
     ],
@@ -116,15 +97,14 @@ export async function analyzeWithGemini(
   }
 
   const data = await response.json() as GeminiResponse;
-
   const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
   if (!rawText) {
     throw new Error("Gemini returned an empty response");
   }
 
   try {
-    const result = JSON.parse(rawText) as AnalysisResult;
-    return result;
+    return JSON.parse(rawText) as AnalysisResult;
   } catch {
     throw new Error("Failed to parse Gemini response as JSON");
   }
@@ -132,9 +112,7 @@ export async function analyzeWithGemini(
 
 interface GeminiResponse {
   candidates?: Array<{
-    content?: {
-      parts?: Array<{ text?: string }>;
-    };
+    content?: { parts?: Array<{ text?: string }> };
     finishReason?: string;
   }>;
   error?: { message: string };

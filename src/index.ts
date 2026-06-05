@@ -1,8 +1,8 @@
 import { Hono } from "hono";
-import { corsMiddleware } from "./middleware/cors";
-import { errorMiddleware } from "./middleware/error";
-import healthRoute from "./routes/health";
-import analyzeRoute from "./routes/analyze";
+import { corsMiddleware } from "./middleware/cors.middleware";
+import { errorMiddleware } from "./middleware/error.middleware";
+import healthRoute from "./routes/health.route";
+import analyzeRoute from "./routes/analyze.route";
 
 export interface Env {
   GEMINI_API_KEY: string;
