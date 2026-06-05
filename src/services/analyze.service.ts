@@ -1,5 +1,5 @@
-import { downloadFromDrive } from "../helpers/gdrive.helper";
-import { analyzeWithGemini } from "../helpers/gemini.helper";
+import { downloadFromDrive } from "../api/gdrive.api";
+import { analyzeWithGemini } from "../api/gemini.api";
 import { DownloadError, GeminiError, ConfigError } from "../errors";
 import type { AnalyzeResponse } from "../interfaces/analysis";
 
