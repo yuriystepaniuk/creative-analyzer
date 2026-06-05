@@ -11,3 +11,10 @@ frontend/.env.local
 # Root
 node_modules/
 *.env
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
