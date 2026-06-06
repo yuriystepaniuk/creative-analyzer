@@ -1,0 +1,41 @@
+.container {
+  width: 100%;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  margin: 0 0 10px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th,
+.table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table th {
+  color: #6b7280;
+  font-weight: 500;
+  width: 40%;
+}
+
+.table td {
+  color: #111827;
+  font-weight: 500;
+}
+
+.null {
+  color: #9ca3af;
+  font-weight: 400;
+}

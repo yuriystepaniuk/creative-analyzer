@@ -1,7 +1,9 @@
+export type HttpStatus = 400 | 422 | 500 | 502;
+
 export class AppError extends Error {
   constructor(
     message: string,
-    public readonly status: number = 500
+    public readonly status: HttpStatus = 500
   ) {
     super(message);
     this.name = "AppError";

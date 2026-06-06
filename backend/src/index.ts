@@ -11,9 +11,10 @@ export interface Env {
 const app = new Hono<{ Bindings: Env }>();
 
 app.use("*", corsMiddleware);
-app.use("*", errorMiddleware);
 
 app.route("/health", healthRoute);
 app.route("/analyze", analyzeRoute);
+
+app.onError(errorMiddleware);
 
 export default app;

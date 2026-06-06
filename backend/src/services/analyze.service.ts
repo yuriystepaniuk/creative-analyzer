@@ -3,27 +3,22 @@ import { analyzeWithGemini } from "../api/gemini.api";
 import { DownloadError, GeminiError, ConfigError } from "../errors";
 import type { AnalyzeResponse } from "../interfaces/analysis";
 
-export async function analyzeCreative(
+const toMessage = (err: unknown): string =>
+  err instanceof Error ? err.message : String(err);
+
+export const analyzeCreative = async (
   url: string,
   apiKey: string
-): Promise<AnalyzeResponse> {
-  if (!apiKey) {
-    throw new ConfigError("GEMINI_API_KEY is not configured");
-  }
+): Promise<AnalyzeResponse> => {
+  if (!apiKey) throw new ConfigError("GEMINI_API_KEY is not configured");
 
-  let file;
-  try {
-    file = await downloadFromDrive(url);
-  } catch (err) {
-    throw new DownloadError((err as Error).message);
-  }
+  const file = await downloadFromDrive(url).catch((err) => {
+    throw new DownloadError(toMessage(err));
+  });
 
-  let result;
-  try {
-    result = await analyzeWithGemini(apiKey, file.buffer, file.mimeType);
-  } catch (err) {
-    throw new GeminiError((err as Error).message);
-  }
+  const result = await analyzeWithGemini(apiKey, file.buffer, file.mimeType).catch((err) => {
+    throw new GeminiError(toMessage(err));
+  });
 
   return {
     data: result,
@@ -33,4 +28,4 @@ export async function analyzeCreative(
       sizeKb: Math.round(file.buffer.byteLength / 1024),
     },
   };
-}
+};

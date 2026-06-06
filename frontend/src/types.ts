@@ -14,23 +14,9 @@ export interface AnalysisResult {
   transcript: string | null;
 }
 
-export interface DriveFile {
-  buffer: ArrayBuffer;
-  mimeType: string;
-  fileName: string;
-}
-
-export interface AnalyzeRequest {
-  url: string;
-}
-
-export interface AnalyzeMeta {
-  fileName: string;
-  mimeType: string;
-  sizeKb: number;
-}
-
 export interface AnalyzeResponse {
   data: AnalysisResult;
-  meta: AnalyzeMeta;
+  meta: { fileName: string; mimeType: string; sizeKb: number };
 }
+
+export type AnalyzeStatus = "idle" | "loading" | "success" | "error";

@@ -1,20 +1,22 @@
 import { ValidationError } from "../errors";
 import type { AnalyzeRequest } from "../interfaces/analysis";
 
-export function validateAnalyzeBody(body: unknown): AnalyzeRequest {
+export const validateAnalyzeBody = (body: unknown): AnalyzeRequest => {
   if (!body || typeof body !== "object") {
     throw new ValidationError("Request body must be a JSON object");
   }
 
   const { url } = body as Record<string, unknown>;
 
-  if (!url || typeof url !== "string" || url.trim() === "") {
+  if (typeof url !== "string" || !url.trim()) {
     throw new ValidationError("Missing required field: url");
   }
 
-  if (!url.includes("drive.google.com")) {
+  const trimmedUrl = url.trim();
+
+  if (!trimmedUrl.includes("drive.google.com")) {
     throw new ValidationError("URL must be a Google Drive link (drive.google.com)");
   }
 
-  return { url: url.trim() };
-}
+  return { url: trimmedUrl };
+};
