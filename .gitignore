@@ -11,3 +11,6 @@ frontend/.env.local
 # Root
 node_modules/
 *.env
+.dev.vars
+.claude/
+.mcp.json
