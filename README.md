@@ -28,7 +28,9 @@ Then redeploy so the variable is picked up by the build.
 
 **Cloudflare Workers + Hono** — instead of Node.js/Express. Workers deploy in seconds, have no cold start for lightweight tasks, and natively support the `fetch` API. Hono was chosen for its minimal overhead and TypeScript-first design.
 
-**Gemini 2.5 Flash** — multimodal model that accepts images and video directly as `inline_data` (base64). Structured output via `responseSchema` guarantees valid JSON without parsing free text. Temperature 0.1 gives deterministic, predictable results.
+**Gemini 2.5 Flash** — multimodal model with structured output via `responseSchema`, which guarantees valid JSON without parsing free text. Temperature 0.1 gives deterministic, predictable results.
+
+Files are sent via the **Gemini Files API** rather than as `inline_data` (base64). The initial approach was to encode the file as base64 and send it inline with the request — simple, one round-trip. It worked for images but failed with videos: Cloudflare Workers on the free tier have a 10 ms CPU time limit per request, and base64-encoding a multi-megabyte video in JavaScript exceeded that limit, returning a 503 before Gemini was ever called. The fix was to upload the raw bytes to the Files API first, poll until the file is in `ACTIVE` state, then reference it by `file_uri` in the generation request. This keeps the Worker's CPU usage minimal regardless of file size.
 
 **Google Drive as file source** — the team already stores creatives on Drive. Instead of a separate upload pipeline, users just paste a link. The backend handles the redirect chain and confirms the virus-scan page for large files automatically.
 
