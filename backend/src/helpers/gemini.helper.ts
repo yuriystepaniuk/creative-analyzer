@@ -1,5 +1,11 @@
 import type { AnalysisResult } from "../interfaces/analysis";
 
+export interface GeminiFile {
+  name: string;
+  uri: string;
+  state: "PROCESSING" | "ACTIVE" | "FAILED";
+}
+
 interface GeminiResponse {
   candidates?: Array<{
     content?: { parts?: Array<{ text?: string }> };

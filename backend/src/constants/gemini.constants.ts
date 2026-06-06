@@ -1,6 +1,13 @@
 export const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
+export const GEMINI_FILES_UPLOAD_URL =
+  "https://generativelanguage.googleapis.com/upload/v1beta/files";
+export const GEMINI_FILES_BASE_URL = "https://generativelanguage.googleapis.com/v1beta";
+
+export const FILE_POLL_INTERVAL_MS = 2000;
+export const FILE_POLL_MAX_ATTEMPTS = 15;
+
 export const GEMINI_TEMPERATURE = 0.1;
 
 export const RETRYABLE_STATUSES = new Set([429, 503]);
